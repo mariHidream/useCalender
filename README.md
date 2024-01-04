@@ -20,3 +20,6 @@
 1. 12/25 1주차 (월~금)
 - node, npm, [npmjs](https://www.npmjs.com/ "npm 모듈이 모여있는 사이트")
 
+2. 1/2 2주차 (월~금)
+- Diary 만들고 기능추가하기
+
