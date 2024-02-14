@@ -1,9 +1,14 @@
 
-import { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
+import { DiaryDispatchContext } from "./App";
 
-const DiaryEditor = ({onCreate}) => {
+const DiaryEditor = () => {
+
+    const { onCreate } = useContext(DiaryDispatchContext)
+
     const authorInput = useRef();
     const contentInput = useRef();
+    
     const [state, setState]  = useState({
         author : "",
         content : "",
@@ -22,7 +27,7 @@ const DiaryEditor = ({onCreate}) => {
             return
         }
 
-        if(state.content.length < 1){
+        if(state.content.length < 5){
             contentInput.current.focus()
             return
         }
@@ -42,6 +47,8 @@ const DiaryEditor = ({onCreate}) => {
                 <input 
                     ref={authorInput}
                     name = "author"
+                    placeholder="작성자"
+                    type ="text"
                     value={state.author} 
                     onChange={handelChangeState}
                 />
@@ -50,11 +57,14 @@ const DiaryEditor = ({onCreate}) => {
                 <textarea 
                     ref={contentInput}
                     name="content"
+                    placeholder="일기"
+                    type="text"
                     value={state.content}
                     onChange={handelChangeState}
                 />
             </div>
             <div>
+                <span>오늘의 감정점수 : </span>
                 <select
                     name="emotion"
                     value={state.emotion}
@@ -74,4 +84,4 @@ const DiaryEditor = ({onCreate}) => {
     )
 }
 
-export default DiaryEditor;
+export default React.memo(DiaryEditor);

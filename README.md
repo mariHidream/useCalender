@@ -23,5 +23,7 @@
 2. 1/2 2주차 (월~금)
 - Diary 만들고 기능추가하기
 
-3. 2/13 3주차 (화~)
+3. 2/13 2주차 (화~수)
 - Diary 조금 마무리 (useEffect, useMomo 등등)
+- useCallback, useReducer, Context
+- Diary 섹션 5. 최종 마무리 (마무리)

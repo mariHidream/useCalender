@@ -1,12 +1,13 @@
-import { useRef, useState } from "react"
+import { memo, useContext, useRef, useState } from "react"
+import { DiaryDispatchContext } from "./App";
 
-const DiaryItem = ({onRemove, onEdit, id, author, content, emotion, created_date}) => {
-    
+const DiaryItem = ({id, author, content, emotion, created_date}) => {
+
+    const {onRemove, onEdit} = useContext(DiaryDispatchContext)
+
     const [localContent, setLocalContent] = useState(content);
     const localContentInput = useRef();
-
     const [isEdit, setIsEdit] = useState(false)
-
     const toggleIsEdit = () => setIsEdit(!isEdit)
 
     const handleRemove = () => { 
@@ -33,7 +34,7 @@ const DiaryItem = ({onRemove, onEdit, id, author, content, emotion, created_date
 
     }
     
-    return <div className="DiaryItem">
+    return (<div className="DiaryItem">
         <div className="info">
             <span>작성자 : {author} | 감정 점수 : {emotion}</span>
             <br/>
@@ -41,11 +42,10 @@ const DiaryItem = ({onRemove, onEdit, id, author, content, emotion, created_date
         </div>
         <div className="memo"> 
             {isEdit ? (
-                <>
-                    <textarea ref={localContentInput} value={localContent} onChange={(e)=>setLocalContent(e.target.value)}></textarea>
-                </>
+                <textarea ref={localContentInput} value={localContent} onChange={(e)=>setLocalContent(e.target.value)}></textarea>
+                
             ) : (
-                <>{content}</>
+                content
             )}
         </div>
             {isEdit ? (
@@ -59,7 +59,7 @@ const DiaryItem = ({onRemove, onEdit, id, author, content, emotion, created_date
                     <button onClick={toggleIsEdit}>수정하기</button>
                 </>
             )}
-    </div>
+    </div>)
 }
 
-export default DiaryItem;
+export default memo(DiaryItem);
