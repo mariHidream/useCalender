@@ -7,7 +7,12 @@ const Edit = ()=>{
     const [originData, setOriginData] = useState()
     const navigator = useNavigate();
     const {id} = useParams();
-    const diaryList = useContext(DiaryStateContext)
+    const diaryList = useContext(DiaryStateContext);
+
+    useEffect(()=>{
+        const titleElement = document.getElementsByTagName('title')[0];
+        titleElement.innerHTML = `감정 일기장 - ${id}번 수정`
+    },[])
 
     useEffect(()=>{
         if(diaryList.length >= 1){
