@@ -36,26 +36,31 @@ export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
 const dummyData = [
-  {
-    id : 1,
-    emotion : 1,
-    content : "오늘의 일기 1번",
-    date : 1708433266300
-  },{
+{
+  id : 1,
+  emotion : 1,
+  content : "오늘의 일기 1번",
+  date : 1709453856956
+},{
   id : 2,
   emotion : 2,
   content : "오늘의 일기 2번",
-  date : 1708433264000
+  date : 1709453856956
 },{
   id : 3,
   emotion : 3,
   content : "오늘의 일기 3번",
-  date : 1708433262000
+  date : 1709453856956
 },{
   id : 4,
   emotion : 4,
   content : "오늘의 일기 4번",
-  date : 1708433266100
+  date : 1709453856956
+},{
+  id : 5,
+  emotion : 5,
+  content : "오늘의 일기 5번",
+  date : 1709453856956
 }
 ]
 
@@ -63,13 +68,13 @@ function App() {
 
   const [data, dispatch] = useReducer(reducer, dummyData);
 
-  const dataId = useRef(0);
+  const dataId = useRef(data.length+1);
 
 // CREATE
-  const onCreate = (data, content, emotion) => {
+  const onCreate = (date, content, emotion) => {
     dispatch({type : "CREATE", data : {
       id : dataId.current,
-      data : new Date(data).getTime(),
+      date : new Date(date).getTime(),
       content,
       emotion,
     }});
@@ -80,7 +85,7 @@ function App() {
     dispatch({type : "REMOVE", targetId})
   }
 // EDIT
-  const onEdit = (targetId, date,content, emotion) => {
+  const onEdit = (targetId, date, content, emotion) => {
     dispatch({
       type : "EDIT",
       data : {
