@@ -8,11 +8,12 @@ import { emotionList } from "../util/emotion";
 
 const Diary = ()=>{
 
-    const {id} = useParams();
-    const DiaryList = useContext(DiaryStateContext);
     const navigate = useNavigate();
     const [data, setData] = useState();
+    const {id} = useParams();
+    const DiaryList = useContext(DiaryStateContext);
 
+    
     useEffect(()=>{
         if(DiaryList.length >= 1){
             const targetDairy = DiaryList.find((it)=> parseInt(it.id) === parseInt(id));

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 
 import MyHeader from "./MyHeader";
 import MyButton from "./MyButton";
@@ -15,12 +15,12 @@ const DiaryEditor = ({isEdit, originData})=>{
     const [emotion, setEmotion] = useState(3);
     const [content, setContent] = useState("");
     const contentRef = useRef();
-    const {onCreate, onEdit} = useContext(DiaryDispatchContext)
+    const {onCreate, onEdit, onRemove} = useContext(DiaryDispatchContext)
     const navigate = useNavigate();
 
-    const handleClickEmote = (emotion)=>{
+    const handleClickEmote = useCallback((emotion)=>{
         setEmotion(emotion)
-    }
+    },[]);
 
     const handleSubmit = () => {
         if(content.length < 1){
@@ -37,6 +37,13 @@ const DiaryEditor = ({isEdit, originData})=>{
         navigate('/',{replace : true})
     }
 
+    const handleRemove = ()=>{
+        if(window.confirm('정말 삭제하시겠습니까?')){
+            onRemove(originData.id);
+            navigate('/', {replace : true})
+        }
+    }
+
     useEffect(()=>{
         if(isEdit) {
             setDate(getStringDate(new Date(parseInt(originData.date))))
@@ -47,7 +54,13 @@ const DiaryEditor = ({isEdit, originData})=>{
     
     return(
         <div className="DiaryEditor">
-            <MyHeader headText={isEdit ? "일기 수정하기" : "새 일기쓰기"} leftChild={<MyButton text={"< 뒤로가기"} onClick={()=>{navigate(-1)}}/>}/>
+            <MyHeader 
+                headText={isEdit ? "일기 수정하기" : "새 일기쓰기"} 
+                leftChild={<MyButton text={"< 뒤로가기"} onClick={()=>{navigate(-1)}}/>}
+                rightChild={isEdit && (
+                    <MyButton text={"삭제하기"} type={"negative"} onClick={handleRemove}/>
+                )}
+            />
             <div>
                 <section>
                     <h4>오늘은 언제인가요?</h4>
@@ -66,7 +79,11 @@ const DiaryEditor = ({isEdit, originData})=>{
                     <h4>오늘의 감정</h4>
                     <div className="input-box emotion_list_wrapper">
                         {emotionList.map((it)=>(
-                            <EmotionItem key={it.emotion_id} {...it} onClick={handleClickEmote} isSelected={it.emotion_id === emotion}/> 
+                            <EmotionItem 
+                                key={it.emotion_id} {...it} 
+                                onClick={handleClickEmote} 
+                                isSelected={it.emotion_id === emotion}
+                            /> 
                         ))}
                     </div>
                 </section>

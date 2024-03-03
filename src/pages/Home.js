@@ -32,14 +32,17 @@ const Home = ()=>{
             ).getTime();
             setData(diaryList.filter((it)=> firstDay <= it.date && it.date <= lastDay))
         }
-    },[diaryList, curDate])
+    },[diaryList, curDate]);
 
     const increaseMonth = ()=>{
         setCurDate(new Date(curDate.getFullYear(), curDate.getMonth()+1, curDate.getDate()))
-    }
+    };
+
     const decreaseMonth = ()=>{
         setCurDate(new Date(curDate.getFullYear(), curDate.getMonth()-1, curDate.getDate()))
-    }
+    };
+
+
     return(
         <div>
             <MyHeader headText={headText} 

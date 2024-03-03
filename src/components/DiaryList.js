@@ -1,7 +1,8 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import MyButton from "./MyButton"
 import { useNavigate } from "react-router-dom"
 import DiaryItem from "./DiaryItem"
+
 const sortOptionList = [
     {value : 'latest', name :"최신순"},
     {value : 'oldest', name :"오래된 순"}
@@ -11,16 +12,21 @@ const filterOptionList = [
     {value : 'good' , name : '긍정'},
     {value : 'bad' , name : '부정'}
 ]
-const ControlMenu = ({value, onChange, optionList}) =>{
+
+const ControlMenu = React.memo(({value, onChange, optionList}) =>{
     return (
-        <select value={value} onChange={(e)=> onChange(e.target.value)} className="ControlMenu">
+        <select 
+            value={value} 
+            onChange={(e)=> onChange(e.target.value)} 
+            className="ControlMenu"
+        >
             {optionList.map((it,idx)=>
                 <option key={idx} value={it.value}>{it.name}</option>
             )}
         </select>
     )
     
-}
+});
 
 const DiaryList = ({ diaryList }) => {
 
@@ -34,7 +40,7 @@ const DiaryList = ({ diaryList }) => {
             if(filter === 'good'){
                 return parseInt(item.emotion) <= 3;
             }else{
-                return parseInt(item.emtion) > 3
+                return parseInt(item.emotion) > 3
             }
         }
 
